@@ -1,3 +1,14 @@
 p {
-  color: blue !important;
+  position: relative !important;
+}
+
+p:hover::before {
+  content: "M";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  color: deepskyblue;
+  left: 0;
+  top: 0;
+  transform: translateX(calc(-100% - 10px));
 }
