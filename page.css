@@ -12,3 +12,11 @@ p:hover::before {
   top: 0;
   transform: translateX(calc(-100% - 10px));
 }
+
+.completed {
+  color: #006600 !important;
+}
+
+.selected {
+  color: #000066 !important;
+}

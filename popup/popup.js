@@ -1,3 +1,7 @@
+const state = {
+  isOn: true,
+  isProcessing: false,
+};
 const results = document.getElementById("results");
 
 if (results === null) {
@@ -30,31 +34,44 @@ const printResponse = async (input) => {
   }
 };
 
-const h1 = document.querySelectorAll("h1");
-const h2 = document.querySelectorAll("h2");
-const h3 = document.querySelectorAll("h3");
-
-const p = document.querySelectorAll("p");
-
-const allHeadings = [...h1, ...h2, ...h3];
-
 const addToMindMap = (heading) => {
   console.log(heading);
 };
 
-p.forEach((paragraph) => {
-  paragraph.addEventListener("click", () => {
-    printResponse(`summarize this paragraph, ${paragraph.innerHTML}`);
+const sendMessage = (functionName, curState) => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.sendMessage(
+      tabs[0].id,
+      { action: functionName, state: curState },
+      (response) => {
+        console.log(response);
+      }
+    );
   });
+};
+
+const statusButton = document.getElementById("status");
+
+statusButton.addEventListener("click", () => {
+  if (state.isOn) {
+    state.isOn = false;
+    statusButton.innerHTML = "OFF";
+  } else {
+    state.isOn = true;
+    statusButton.innerHTML = "ON";
+  }
 });
 
 const mindMapButton = document.getElementById("mind_map_button");
 
-allHeadings.forEach((heading) => {
-  heading.addEventListener("mouseenter", () => {
-    heading.innerHTML.concat(heading.innerHTML, mindMapButton);
-  });
-  heading.addEventListener("mouseleave", () => {
-    heading.innerHTML.replace(mindMapButton, "");
-  });
-});
+// chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+//   if (state.isOn) {
+//     chrome.tabs.sendMessage(
+//       tabs[0].id,
+//       { action: "startProcess" },
+//       (response) => {
+//         state.isProcessing = true;
+//       }
+//     );
+//   }
+// });
