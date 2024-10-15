@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Hello Extensions v2",
-  "description": "Base Level Extension",
+  "name": "momorize.ai",
+  "description": "A tool to help you memorize anything",
   "version": "1.0",
   "permissions": ["activeTab", "scripting", "storage"],
   "minimum_chrome_version": "102",
